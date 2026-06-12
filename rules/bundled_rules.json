@@ -1,0 +1,481 @@
+{
+  "global_suppressions": {
+    "value_patterns": [
+      {
+        "id": "placeholder_angle_brackets",
+        "pattern": "^<[^>]+>$",
+        "effect": "suppress",
+        "applies_to": ["entropy"],
+        "reason": "Placeholder value like <API_KEY>"
+      },
+      {
+        "id": "placeholder_template_var",
+        "pattern": "^\\$\\{[^}]+\\}$",
+        "effect": "suppress",
+        "applies_to": ["entropy"],
+        "reason": "Template variable like ${TOKEN}"
+      },
+      {
+        "id": "placeholder_repeated_x",
+        "pattern": "^x{8,}$",
+        "effect": "suppress",
+        "applies_to": ["entropy"],
+        "reason": "Repeated x placeholder"
+      },
+      {
+        "id": "placeholder_repeated_star",
+        "pattern": "^\\*{8,}$",
+        "effect": "suppress",
+        "applies_to": ["entropy"],
+        "reason": "Masked placeholder"
+      },
+      {
+        "id": "placeholder_repeated_zero",
+        "pattern": "^0{8,}$",
+        "effect": "suppress",
+        "applies_to": ["entropy"],
+        "reason": "Repeated zero placeholder"
+      }
+    ],
+    "value_markers": [
+      {
+        "id": "dummy_marker",
+        "marker": "dummy",
+        "effect": "score_delta",
+        "score_delta": -50,
+        "applies_to": ["entropy"],
+        "reason": "Contains dummy marker"
+      },
+      {
+        "id": "example_marker",
+        "marker": "example",
+        "effect": "score_delta",
+        "score_delta": -50,
+        "applies_to": ["entropy"],
+        "reason": "Contains example marker"
+      },
+      {
+        "id": "sample_marker",
+        "marker": "sample",
+        "effect": "score_delta",
+        "score_delta": -50,
+        "applies_to": ["entropy"],
+        "reason": "Contains sample marker"
+      },
+      {
+        "id": "placeholder_marker",
+        "marker": "placeholder",
+        "effect": "score_delta",
+        "score_delta": -50,
+        "applies_to": ["entropy"],
+        "reason": "Contains placeholder marker"
+      },
+      {
+        "id": "changeme_marker",
+        "marker": "changeme",
+        "effect": "score_delta",
+        "score_delta": -50,
+        "applies_to": ["entropy"],
+        "reason": "Contains changeme marker"
+      },
+      {
+        "id": "fake_secret_marker",
+        "marker": "fake_secret",
+        "effect": "score_delta",
+        "score_delta": -50,
+        "applies_to": ["entropy"],
+        "reason": "Contains fake_secret marker"
+      },
+      {
+        "id": "your_api_key_marker",
+        "marker": "your_api_key",
+        "effect": "score_delta",
+        "score_delta": -50,
+        "applies_to": ["entropy"],
+        "reason": "Contains your_api_key marker"
+      }
+    ]
+  },
+  "key_name_rules": {
+    "strong": [
+      "api_key",
+      "apikey",
+      "access_token",
+      "secret_key",
+      "client_secret",
+      "refresh_token",
+      "private_key",
+      "signing_secret",
+      "webhook_secret"
+    ],
+    "medium": [
+      "token",
+      "secret",
+      "password",
+      "passwd",
+      "pwd",
+      "credential",
+      "credentials"
+    ]
+  },
+  "regex_rules": [
+    {
+      "id": "github_token",
+      "name": "GitHub Token",
+      "pattern": "\\b(ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{36}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "aws_access_key_id",
+      "name": "AWS Access Key ID",
+      "pattern": "\\b(?:A3T[A-Z0-9]|ABIA|ACCA|AKIA|ASIA)[A-Z0-9]{16}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "aws_secret_access_key",
+      "name": "AWS Secret Access Key",
+      "pattern": "(?i)(?:aws_?secret_?access_?key|secret_?access_?key)\\s*[:=]\\s*['\\\"]?([A-Za-z0-9/+=]{40})['\\\"]?",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "github_fine_grained_pat",
+      "name": "GitHub Fine-Grained PAT",
+      "pattern": "\\bgithub_pat_[A-Za-z0-9_]{20,255}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "gitlab_tokens",
+      "name": "GitLab Tokens",
+      "pattern": "\\b(?:glpat|gldt|glft|glsoat|glrt)-[A-Za-z0-9_\\-]{20,50}(?!\\w)\\b|\\bGR1348941[A-Za-z0-9_\\-]{20,50}(?!\\w)\\b|\\bglcbt-(?:[0-9a-fA-F]{2}_)?[A-Za-z0-9_\\-]{20,50}(?!\\w)\\b|\\bglimt-[A-Za-z0-9_\\-]{25}(?!\\w)\\b|\\bglptt-[A-Za-z0-9_\\-]{40}(?!\\w)\\b|\\bglagent-[A-Za-z0-9_\\-]{50,1024}(?!\\w)\\b|\\bgloas-[A-Za-z0-9_\\-]{64}(?!\\w)",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "slack_token",
+      "name": "Slack Token",
+      "pattern": "(?i)xox(?:a|b|p|o|s|r)-(?:\\d+-)+[a-z0-9]+",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "slack_webhook",
+      "name": "Slack Webhook",
+      "pattern": "(?i)https://hooks\\.slack\\.com/services/T[a-zA-Z0-9_]+/B[a-zA-Z0-9_]+/[a-zA-Z0-9_]+",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "discord_bot_token",
+      "name": "Discord Bot Token",
+      "pattern": "\\b[MNO][A-Za-z0-9_-]{23,25}\\.[A-Za-z0-9_-]{6}\\.[A-Za-z0-9_-]{27}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "discord_webhook",
+      "name": "Discord Webhook",
+      "pattern": "https://(?:canary\\.|ptb\\.)?discord(?:app)?\\.com/api/webhooks/\\d{5,30}/[A-Za-z0-9_-]{30,}",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "telegram_bot_token",
+      "name": "Telegram Bot Token",
+      "pattern": "\\b\\d{8,10}:[0-9A-Za-z_-]{35}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "stripe_secret_key",
+      "name": "Stripe Secret Key",
+      "pattern": "\\b(?:r|s)k_(?:live|test)_[0-9A-Za-z]{24,}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "stripe_publishable_key",
+      "name": "Stripe Publishable Key",
+      "pattern": "\\bpk_(?:live|test)_[A-Za-z0-9]{20,}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "twilio_account_sid",
+      "name": "Twilio Account SID",
+      "pattern": "\\bAC[0-9a-fA-F]{32}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "twilio_api_key_sid",
+      "name": "Twilio API Key SID",
+      "pattern": "\\bSK[0-9a-fA-F]{32}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "twilio_auth_token",
+      "name": "Twilio Auth Token",
+      "pattern": "(?i)\\b(?:twilio_)?auth_?token['\\\"]?\\s*[:=]\\s*['\\\"]?([0-9a-f]{32})['\\\"]?",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "sendgrid_api_key",
+      "name": "SendGrid API Key",
+      "pattern": "\\bSG\\.[A-Za-z0-9_-]{22}\\.[A-Za-z0-9_-]{43}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "npm_token",
+      "name": "NPM Token",
+      "pattern": "\\bnpm_[A-Za-z0-9]{30,}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "npm_npmrc_auth_token",
+      "name": "NPM .npmrc Auth Token",
+      "pattern": "//[^\\n]+/:_authToken=\\s*((npm_.+)|([A-Fa-f0-9-]{36}))",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "pypi_token",
+      "name": "PyPI Token",
+      "pattern": "\\bpypi-(?:AgEIcHlwaS5vcmc|AgENdGVzdC5weXBpLm9yZw)[A-Za-z0-9-_]{70,}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "azure_storage_connection_string",
+      "name": "Azure Storage Connection String",
+      "pattern": "DefaultEndpointsProtocol=(?:http|https);AccountName=[A-Za-z0-9\\-]+;AccountKey=([A-Za-z0-9+/=]{40,});EndpointSuffix=core\\.windows\\.net",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "azure_storage_account_key",
+      "name": "Azure Storage Account Key",
+      "pattern": "AccountKey=[A-Za-z0-9+/=]{88}",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "azure_sas_token",
+      "name": "Azure SAS Token",
+      "pattern": "[?&]sv=\\d{4}-\\d{2}-\\d{2}[^ \\n]*?&sig=[A-Za-z0-9%+/=]{16,}",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "artifactory_credentials",
+      "name": "Artifactory Credentials",
+      "pattern": "(?:\\s|=|:|\\\"|^)AKC[a-zA-Z0-9]{10,}(?:\\s|\\\"|$)",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "artifactory_encrypted_password",
+      "name": "Artifactory Encrypted Password",
+      "pattern": "(?:\\s|=|:|\\\"|^)AP[\\dABCDEF][a-zA-Z0-9]{8,}(?:\\s|\\\"|$)",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "cloudant_url_credential",
+      "name": "Cloudant URL Credential",
+      "pattern": "(?i)https?://[\\w\\-]+:([0-9a-f]{64}|[a-z]{24})@[\\w\\-]+\\.cloudant\\.com",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "softlayer_api_token",
+      "name": "SoftLayer API Token",
+      "pattern": "(?i)https?://api\\.softlayer\\.com/soap/(?:v3|v3\\.1)/([a-z0-9]{64})",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "jwt_token",
+      "name": "JWT Token",
+      "pattern": "\\beyJ[A-Za-z0-9\\-_=]+\\.[A-Za-z0-9\\-_=]+\\.?[A-Za-z0-9\\-_.+/=]*?\\b",
+      "severity": "medium",
+      "confidence": "medium"
+    },
+    {
+      "id": "private_key_pem",
+      "name": "Private Key (PEM)",
+      "pattern": "-----BEGIN (?:RSA |EC |DSA |ENCRYPTED )?PRIVATE KEY-----\\s*\\n(?:(?:[A-Za-z0-9\\-]+:[^\\n]*\\n)*\\s*)?(?:[A-Za-z0-9+/=]{40,}\\s*\\n)+-----END (?:RSA |EC |DSA |ENCRYPTED )?PRIVATE KEY-----",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "openssh_private_key",
+      "name": "OpenSSH Private Key",
+      "pattern": "-----BEGIN OPENSSH PRIVATE KEY-----\\s*\\n(?:[A-Za-z0-9+/=]{40,}\\s*\\n)+-----END OPENSSH PRIVATE KEY-----",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "pgp_private_key",
+      "name": "PGP Private Key",
+      "pattern": "-----BEGIN PGP PRIVATE KEY BLOCK-----\\s*\\n(?:(?:[A-Za-z0-9\\-]+:[^\\n]*\\n)*\\s*)?(?:[A-Za-z0-9+/=]{40,}\\s*\\n)+-----END PGP PRIVATE KEY BLOCK-----",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "ssh2_encrypted_private_key",
+      "name": "SSH2 Encrypted Private Key",
+      "pattern": "-----BEGIN SSH2 ENCRYPTED PRIVATE KEY-----\\s*\\n(?:[A-Za-z0-9+/=]{40,}\\s*\\n)+-----END SSH2 ENCRYPTED PRIVATE KEY-----",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "putty_private_key",
+      "name": "PuTTY Private Key",
+      "pattern": "(?:^|\\n)PuTTY-User-Key-File-\\d+:\\s*\\S+",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "google_api_key",
+      "name": "Google API Key",
+      "pattern": "\\bAIza[0-9A-Za-z\\-_\\\\]{32,40}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "google_oauth_token",
+      "name": "Google OAuth Token",
+      "pattern": "\\bya29\\.[0-9A-Za-z\\-_]{20,}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "anthropic_api_key",
+      "name": "Anthropic API Key",
+      "pattern": "\\bsk-ant-api\\d+-[A-Za-z0-9_-]{90,}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "openai_api_key",
+      "name": "OpenAI API Key",
+      "pattern": "\\bsk-[A-Za-z0-9-_]*[A-Za-z0-9]{20}T3BlbkFJ[A-Za-z0-9]{20}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "password_assignment",
+      "name": "Password Assignment",
+      "pattern": "(?i)\\b(pass(word)?|pwd)\\s*[:=]\\s*['\\\"](?![a-zA-Z][a-zA-Z_\\-]*['\\\"])[^'\\\"\\n]{8,}['\\\"]",
+      "severity": "medium",
+      "confidence": "medium"
+    },
+    {
+      "id": "mailchimp_api_key",
+      "name": "Mailchimp API Key",
+      "pattern": "\\b[0-9a-z]{32}-us[0-9]{1,2}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "basic_auth_credentials",
+      "name": "Basic Auth Credentials",
+      "pattern": "://[^:/?#\\[\\]@!$&'()*+,;=\\s]+:(?!(?:[a-zA-Z]{2,30}|\\{[^}]*\\}|<[^>]*>)@)([^:/?#\\[\\]@!$&'()*+,;=\\s]+)@",
+      "severity": "medium",
+      "confidence": "medium",
+      "path_suppress": "(^|/)tests?/|(^|/)docs?/|(^|/)examples?/|(^|/)fixtures?/|[._]tests?\\.[a-z]+$|_test\\.[a-z]+$|\\.(md|rst|txt)$"
+    },
+    {
+      "id": "databricks_pat",
+      "name": "Databricks PAT",
+      "pattern": "\\bdapi[A-Za-z0-9]{32}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "firebase_fcm_server_key",
+      "name": "Firebase FCM Server Key",
+      "pattern": "\\bAAAA[A-Za-z0-9_-]{7,}:[A-Za-z0-9_-]{140,}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "shopify_token",
+      "name": "Shopify Token",
+      "pattern": "\\bshp(?:at|pa|ss)_[0-9a-f]{32}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "notion_integration_token",
+      "name": "Notion Integration Token",
+      "pattern": "\\bsecret_[A-Za-z0-9]{32,}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "linear_api_key",
+      "name": "Linear API Key",
+      "pattern": "\\blin_api_[A-Za-z0-9]{40,}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "mapbox_access_token",
+      "name": "Mapbox Access Token",
+      "pattern": "\\b[ps]k\\.[A-Za-z0-9\\-_.]{30,}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "dropbox_access_token",
+      "name": "Dropbox Access Token",
+      "pattern": "\\bsl\\.[A-Za-z0-9_-]{120,}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "digitalocean_pat",
+      "name": "DigitalOcean Personal Access Token",
+      "pattern": "\\bdop_v1_[a-f0-9]{64}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "square_access_token",
+      "name": "Square Access Token",
+      "pattern": "\\bEAAA[A-Za-z0-9]{60}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "square_oauth_secret",
+      "name": "Square OAuth Secret",
+      "pattern": "\\bsq0csp-[0-9A-Za-z_\\-]{43}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "airtable_pat",
+      "name": "Airtable Personal Access Token",
+      "pattern": "\\bpat[A-Za-z0-9]{14}\\.[a-f0-9]{64}\\b",
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "facebook_access_token",
+      "name": "Facebook Access Token",
+      "pattern": "\\bEAA[A-Za-z0-9]{30,}\\b",
+      "severity": "high",
+      "confidence": "high"
+    }
+  ]
+}

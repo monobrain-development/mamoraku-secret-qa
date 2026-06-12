@@ -1,0 +1,37 @@
+{
+  "name": "mamoraku-secret",
+  "owner": {
+    "name": "MONO BRAIN Inc.",
+    "email": "info@monobrain.jp"
+  },
+  "description": "Claude Code plugins by MONO BRAIN Inc.",
+  "plugins": [
+    {
+      "name": "mamoraku-secret",
+      "displayName": "Mamoraku Secret",
+      "source": "./",
+      "description": "Detects and blocks API keys, tokens, and credentials in Claude Code sessions before they leak.",
+      "author": {
+        "name": "MONO BRAIN Inc.",
+        "email": "info@monobrain.jp"
+      },
+      "homepage": "https://mamoraku-lp-954273464710.us-central1.run.app/",
+      "repository": "https://github.com/monobrain-development/mamoraku-secret-qa",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "secret-detection",
+        "api-key",
+        "credentials",
+        "hooks"
+      ],
+      "category": "security",
+      "tags": [
+        "security",
+        "secrets",
+        "hooks",
+        "claude-code"
+      ]
+    }
+  ]
+}
